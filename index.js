@@ -20,11 +20,23 @@ function viewEmployees() {
 }
 
 function viewDepartments() {
-    console.log("View Departments");
+    db.query('SELECT * FROM department', function (err, results) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(results);
+        }
+    });
 }
 
 function viewRoles() {
-    console.log("View Roles");
+    db.query('SELECT * FROM role', function (err, results) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(results);
+        }
+    });
 }
 
 function addEmployee() {
