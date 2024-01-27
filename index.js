@@ -1,12 +1,51 @@
-const inquierer = require('inquirer');
+const inquirer = require('inquirer');
+const mysql = require('mysql2');
+
+const db = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: 'Bigboy21!',
+    database: 'employee_tracker_db'
+});
 
 
+function viewEmployees() {
+    db.query('SELECT first_name, last_name FROM employee', function (err, results) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(results);
+        }
+    });
+}
 
+function viewDepartments() {
+    console.log("View Departments");
+}
 
+function viewRoles() {
+    console.log("View Roles");
+}
+
+function addEmployee() {
+    console.log("Add Employee");
+}
+
+function addDepartment() {
+    console.log("Add Department");
+}
+
+function addRole() {
+    console.log("Add Role");
+}
+
+function updateRole() {
+    console.log("Update Role");
+}
 
 // RESULT: initializes the application
 function init() {
-    inqurier.prompt(
+    inquirer.prompt(
         {
             type: 'list',
             message: 'What would you like to do?',
