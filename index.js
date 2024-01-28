@@ -20,8 +20,10 @@ function viewEmployees() {
     db.query(query, function (err, results) {
         if (err) {
             console.log(err);
+            init();
         } else {
             console.table(results);
+            init();
         }
     });
 }
@@ -30,8 +32,11 @@ function viewDepartments() {
     db.query(`SELECT id, name 'department' FROM department`, function (err, results) {
         if (err) {
             console.log(err);
+            init();
+
         } else {
             console.table(results);
+            init();
         }
     });
 }
@@ -44,8 +49,12 @@ function viewRoles() {
     function (err, results) {
         if (err) {
             console.log(err);
+            init();
+
         } else {
             console.table(results);
+            init();
+
         }
     });
 }
@@ -76,8 +85,10 @@ function addEmployee() {
         db.query('INSERT INTO employee SET ?', answers, function (err, results) {
             if (err) {
                 console.log(err);
+                init();
             } else {
                 console.log("Employee added!");
+                init();
             }
         });
     })
@@ -94,8 +105,10 @@ function addDepartment() {
         db.query('INSERT INTO department SET ?', answers, function (err, results) {
             if (err) {
                 console.log(err);
+                init();
             } else {
                 console.log("Department added!");
+                init();
             }
         });
     })
@@ -123,8 +136,10 @@ function addRole() {
         db.query('INSERT INTO role SET ?', answers, function (err, results) {
             if (err) {
                 console.log(err);
+                init();
             } else {
                 console.log("Role added!");
+                init();
             }
         });
     })
@@ -146,8 +161,10 @@ function updateRole() {
         db.query('UPDATE employee SET role_id = ? WHERE id = ?', [answers.role_id, answers.id], function (err, results) {
             if (err) {
                 console.log(err);
+                init();
             } else {
                 console.log("Employee role updated!");
+                init();
             }
         });
     })
