@@ -11,7 +11,7 @@ const db = mysql.createConnection({
 
 function viewEmployees() {
     const query = `
-    SELECT employee.id, employee.first_name, employee.last_name, department.name, role.title, role.salary, CONCAT(manager.first_name, ' ', manager.last_name) AS manager_name
+    SELECT employee.id, employee.first_name, employee.last_name, department.name AS department, role.title AS role, role.salary, CONCAT(manager.first_name, ' ', manager.last_name) AS manager_name
     FROM employee
     INNER JOIN role ON employee.role_id = role.id
     INNER JOIN department ON role.department_id = department.id
@@ -27,7 +27,7 @@ function viewEmployees() {
 }
 
 function viewDepartments() {
-    db.query('SELECT * FROM department', function (err, results) {
+    db.query(`SELECT id, name 'department' FROM department`, function (err, results) {
         if (err) {
             console.log(err);
         } else {
@@ -37,7 +37,11 @@ function viewDepartments() {
 }
 
 function viewRoles() {
-    db.query('SELECT * FROM role', function (err, results) {
+    db.query(`SELECT role.id, title 'role', salary, department.name 'department' 
+    FROM role 
+    JOIN department 
+    ON role.department_id = department.id`, 
+    function (err, results) {
         if (err) {
             console.log(err);
         } else {
