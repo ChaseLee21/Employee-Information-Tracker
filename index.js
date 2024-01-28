@@ -77,7 +77,7 @@ function addEmployee() {
             if (err) {
                 console.log(err);
             } else {
-                console.log(results);
+                console.log("Employee added!");
             }
         });
     })
@@ -87,7 +87,7 @@ function addDepartment() {
     inquirer.prompt([
         {
             type: 'input',
-            name: 'departmentName',
+            name: 'name',
             message: 'What is the department\'s name?'
         }
     ]).then((answers) => {
@@ -95,7 +95,7 @@ function addDepartment() {
             if (err) {
                 console.log(err);
             } else {
-                console.log(results);
+                console.log("Department added!");
             }
         });
     })
@@ -116,7 +116,7 @@ function addRole() {
         },
         {
             type: 'input',
-            name: 'departmentId',
+            name: 'department_id',
             message: 'What is the role\'s department ID?'
         }
     ]).then((answers) => {
@@ -124,7 +124,7 @@ function addRole() {
             if (err) {
                 console.log(err);
             } else {
-                console.log(results);
+                console.log("Role added!");
             }
         });
     })
@@ -134,20 +134,20 @@ function updateRole() {
     inquirer.prompt([
         {
             type: 'input',
-            name: 'employeeId',
+            name: 'id',
             message: 'What is the employee\'s ID?'
         },
         {
             type: 'input',
-            name: 'roleId',
+            name: 'role_id',
             message: 'What is the employee\'s new role ID?'
         }
     ]).then((answers) => {
-        db.query('UPDATE employee SET role_id = ? WHERE id = ?', [answers.roleId, answers.employeeId], function (err, results) {
+        db.query('UPDATE employee SET role_id = ? WHERE id = ?', [answers.role_id, answers.id], function (err, results) {
             if (err) {
                 console.log(err);
             } else {
-                console.log(results);
+                console.log("Employee role updated!");
             }
         });
     })
