@@ -75,54 +75,58 @@ function addEmployee() {
                 }
             });
         }
-    });
 
-    db.query('SELECT * FROM employee', function (err, employees) {
-        if (err) {
-            console.log(err);
-            init();
-        } else {
-            managerChoices = employees.map(employee => {
-                return {
-                    name: employee.first_name + ' ' + employee.last_name,
-                    value: employee.id
-                }
-            });
-        }
-    });
-
-    inquirer.prompt([
-        {
-            type: 'input',
-            name: 'first_name',
-            message: 'What is the employee\'s first name?'
-        },
-        {
-            type: 'input',
-            name: 'last_name',
-            message: 'What is the employee\'s last name?'
-        },
-        {
-            type: 'input',
-            name: 'role_id',
-            message: 'What is the employee\'s role ID?'
-        },
-        {
-            type: 'input',
-            name: 'manager_id',
-            message: 'What is the employee\'s manager ID?'
-        }
-    ]).then((answers) => {
-        db.query('INSERT INTO employee SET ?', answers, function (err, results) {
+        db.query('SELECT * FROM employee', function (err, employees) {
             if (err) {
                 console.log(err);
                 init();
             } else {
-                console.log("Employee added!");
-                init();
+                managerChoices = employees.map(employee => {
+                    return {
+                        name: employee.first_name + ' ' + employee.last_name,
+                        value: employee.id
+                    }
+                });
             }
+
+            inquirer.prompt([
+                {
+                    type: 'input',
+                    name: 'first_name',
+                    message: 'What is the employee\'s first name?'
+                },
+                {
+                    type: 'input',
+                    name: 'last_name',
+                    message: 'What is the employee\'s last name?'
+                },
+                {
+                    type: 'list',
+                    name: 'role_id',
+                    message: 'What is the employee\'s role ID?',
+                    choices: roleChoices
+                },
+                {
+                    type: 'list',
+                    name: 'manager_id',
+                    message: 'What is the employee\'s manager ID?',
+                    choices: managerChoices
+                }
+            ]).then((answers) => {
+                answers.role_id = parseInt(answers.role_id);
+                answers.manager_id = parseInt(answers.manager_id);
+                db.query('INSERT INTO employee SET ?', answers, function (err, results) {
+                    if (err) {
+                        console.log(err);
+                        init();
+                    } else {
+                        console.log("Employee added!");
+                        init();
+                    }
+                });
+            })
         });
-    })
+    });
 }
 
 function addDepartment() {
