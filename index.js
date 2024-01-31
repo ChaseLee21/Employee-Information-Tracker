@@ -151,33 +151,51 @@ function addDepartment() {
 
 
 function addRole() {
-    inquirer.prompt([
-        {
-            type: 'input',
-            name: 'title',
-            message: 'What is the role\'s title?'
-        },
-        {
-            type: 'input',
-            name: 'salary',
-            message: 'What is the role\'s salary?'
-        },
-        {
-            type: 'input',
-            name: 'department_id',
-            message: 'What is the role\'s department ID?'
+    let departmentChoices = [];
+
+    db.query('SELECT * FROM department', function (err, departments) {
+        if (err) {
+            console.log(err);
+        } else {
+            departmentChoices = departments.map(department => {
+                return {
+                    name: department.name,
+                    value: department.id
+                }
+            });
         }
-    ]).then((answers) => {
-        db.query('INSERT INTO role SET ?', answers, function (err, results) {
-            if (err) {
-                console.log(err);
-                init();
-            } else {
-                console.log("Role added!");
-                init();
+
+
+        inquirer.prompt([
+            {
+                type: 'input',
+                name: 'title',
+                message: 'What is the role\'s title?'
+            },
+            {
+                type: 'input',
+                name: 'salary',
+                message: 'What is the role\'s salary?'
+            },
+            {
+                type: 'list',
+                name: 'department_id',
+                message: 'What is the role\'s department ID?',
+                choices: departmentChoices
             }
-        });
-    })
+        ]).then((answers) => {
+            answers.department_id = parseInt(answers.department_id);
+            db.query('INSERT INTO role SET ?', answers, function (err, results) {
+                if (err) {
+                    console.log(err);
+                    init();
+                } else {
+                    console.log("Role added!");
+                    init();
+                }
+            });
+        })
+    });
 }
 
 function updateRole() {
