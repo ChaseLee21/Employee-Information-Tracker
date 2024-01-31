@@ -60,6 +60,37 @@ function viewRoles() {
 }
 
 function addEmployee() {
+    let roleChoices = [];
+    let managerChoices = [];
+
+    db.query('SELECT * FROM role', function (err, roles) {
+        if (err) {
+            console.log(err);
+            init();
+        } else {
+            roleChoices = roles.map(role => {
+                return {
+                    name: role.title,
+                    value: role.id
+                }
+            });
+        }
+    });
+
+    db.query('SELECT * FROM employee', function (err, employees) {
+        if (err) {
+            console.log(err);
+            init();
+        } else {
+            managerChoices = employees.map(employee => {
+                return {
+                    name: employee.first_name + ' ' + employee.last_name,
+                    value: employee.id
+                }
+            });
+        }
+    });
+
     inquirer.prompt([
         {
             type: 'input',
