@@ -12,6 +12,7 @@
   You must have node.js and mysql installed on your machine. After downloading the project open the project in a terminal and run 'npm install' to download the projects dependendcies. You must also create the database on your machine. To do that login to mysql in your terminal and run the schema file found in db/schema.sql. To run the file use the command 'SOURCE db/schema.sql' After that, run 'node index.js' to start the program. If you want to seed the database with some starter data you can run the seed file by running 'SOURCE db/seeds.sql' in the mysql terminal. 
   ## Usage
   To use this project follow the instructions in the video below
+  https://drive.google.com/file/d/11V6RWlkb2LkQzTPnteWIuSEnw-sb0xtU/view
   ## Contribution
   For this project I worked with two classmates Will Schickler and Shelby Hutchinson. We worked on the sql queries and implementing node package inquirer to retrieve user input from the console.
   ## Tests
